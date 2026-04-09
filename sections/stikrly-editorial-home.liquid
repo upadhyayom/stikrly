@@ -1,0 +1,1666 @@
+{% liquid
+  assign source_collection = section.settings.featured_collection
+  if source_collection == blank
+    assign source_collection = collections['all']
+  endif
+
+  assign hero_image = section.settings.hero_image
+  if hero_image == blank and source_collection != blank and source_collection.products_count > 0
+    assign hero_image = source_collection.products.first.featured_media.preview_image
+  endif
+
+  assign story_image = section.settings.story_image
+  if story_image == blank
+    assign story_image = hero_image
+  endif
+
+  assign manifesto_image = section.settings.manifesto_image
+  if manifesto_image == blank
+    assign manifesto_image = hero_image
+  endif
+
+  assign featured_products_count = section.settings.featured_products_count | default: 4
+%}
+
+<section
+  class="stikrly-homepage"
+  style="
+    --stikrly-paper: {{ section.settings.paper_color }};
+    --stikrly-paper-alt: {{ section.settings.paper_alt_color }};
+    --stikrly-ink: {{ section.settings.ink_color }};
+    --stikrly-muted: {{ section.settings.muted_color }};
+    --stikrly-accent: {{ section.settings.accent_color }};
+    --stikrly-dark: {{ section.settings.dark_color }};
+    --stikrly-line: {{ section.settings.line_color }};
+  "
+>
+  <style>
+    #shopify-section-{{ section.id }} .stikrly-homepage {
+      background: var(--stikrly-paper);
+      color: var(--stikrly-ink);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__shell {
+      width: min(1380px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 80px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__eyebrow {
+      margin: 0;
+      color: var(--stikrly-accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__title {
+      margin: 0;
+      font-size: clamp(2.6rem, 7vw, 6.9rem);
+      line-height: 0.9;
+      letter-spacing: -0.07em;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 0 20px;
+      border-bottom: 1px solid var(--stikrly-line);
+      margin-bottom: 28px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2vw, 2.2rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__section-copy {
+      max-width: 26rem;
+      margin: 0;
+      color: var(--stikrly-muted);
+      font-size: 0.96rem;
+      line-height: 1.7;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 64px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 32px;
+      min-height: 720px;
+      padding: 28px;
+      border: 1px solid var(--stikrly-line);
+      background: linear-gradient(180deg, #ffffff 0%, var(--stikrly-paper-alt) 100%);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-copy {
+      display: grid;
+      gap: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-copy p {
+      margin: 0;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-text {
+      max-width: 26rem;
+      color: var(--stikrly-muted);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__button,
+    #shopify-section-{{ section.id }} .stikrly-homepage__text-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      transition: transform 160ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__button {
+      min-height: 48px;
+      padding: 0 22px;
+      background: var(--stikrly-accent);
+      border: 1px solid var(--stikrly-accent);
+      color: #fff;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__button:hover {
+      transform: translateY(-1px);
+      background: #b53a26;
+      border-color: #b53a26;
+      color: #fff;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__text-link {
+      color: var(--stikrly-ink);
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__text-link:hover {
+      color: var(--stikrly-accent);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-note {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      padding-top: 18px;
+      border-top: 1px solid var(--stikrly-line);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-note strong,
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-note span {
+      display: block;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-note strong {
+      margin-bottom: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--stikrly-accent);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-note span {
+      color: var(--stikrly-muted);
+      line-height: 1.65;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-media {
+      position: relative;
+      min-height: 720px;
+      border: 1px solid var(--stikrly-line);
+      overflow: hidden;
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
+        linear-gradient(135deg, #d8cdc0 0%, #f4efe8 45%, #c7b39e 100%);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-media img,
+    #shopify-section-{{ section.id }} .stikrly-homepage__story-media img,
+    #shopify-section-{{ section.id }} .stikrly-homepage__manifesto-media img,
+    #shopify-section-{{ section.id }} .stikrly-homepage__category-image img,
+    #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card img,
+    #shopify-section-{{ section.id }} .stikrly-homepage__utility-media img,
+    #shopify-section-{{ section.id }} .stikrly-homepage__product-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      background:
+        radial-gradient(circle at top left, rgba(212, 75, 52, 0.24), transparent 38%),
+        radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.08), transparent 28%),
+        linear-gradient(140deg, #efe7df 0%, #f7f3ed 48%, #ddd0c1 100%);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-card {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: end;
+      padding: 18px 20px;
+      background: rgba(18, 18, 18, 0.78);
+      backdrop-filter: blur(10px);
+      color: #fff;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-card p,
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-card span {
+      margin: 0;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ff927d;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-card p {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      letter-spacing: -0.03em;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__hero-card span {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.74);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__category-card {
+      height: 100%;
+      border: 1px solid var(--stikrly-line);
+      background: var(--stikrly-paper-alt);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__category-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212, 75, 52, 0.5);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__category-image {
+      aspect-ratio: 1 / 1.08;
+      overflow: hidden;
+      background: linear-gradient(145deg, #f0e7df 0%, #ddd3c6 100%);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__category-content {
+      display: grid;
+      gap: 10px;
+      padding: 16px 16px 18px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__category-title {
+      margin: 0;
+      font-size: 1.06rem;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__category-copy {
+      margin: 0;
+      color: var(--stikrly-muted);
+      font-size: 0.92rem;
+      line-height: 1.7;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__gallery {
+      margin-bottom: 64px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--stikrly-line);
+      min-height: 300px;
+      background:
+        radial-gradient(circle at top left, rgba(212, 75, 52, 0.22), transparent 28%),
+        linear-gradient(145deg, #efe7dd 0%, #d3c4b4 100%);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--square {
+      grid-column: span 3;
+      aspect-ratio: 1 / 1;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--portrait {
+      grid-column: span 3;
+      aspect-ratio: 4 / 5.2;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--wide {
+      grid-column: span 6;
+      aspect-ratio: 16 / 10;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--feature {
+      grid-column: span 6;
+      aspect-ratio: 11 / 12;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__gallery-caption {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__manifesto {
+      display: grid;
+      grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
+      gap: 0;
+      margin-bottom: 64px;
+      color: #fff;
+      background: var(--stikrly-dark);
+      overflow: hidden;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__manifesto-media {
+      min-height: 500px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, #202020 0%, #2a2a2a 100%);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__manifesto-copy {
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      padding: clamp(28px, 4vw, 56px);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__manifesto-copy h2 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.6rem);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__manifesto-copy .rte p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 1rem;
+      line-height: 1.9;
+      max-width: 34rem;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__product-section {
+      margin-bottom: 64px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__product-card {
+      display: grid;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__product-media {
+      aspect-ratio: 1 / 1.08;
+      overflow: hidden;
+      border: 1px solid var(--stikrly-line);
+      background: linear-gradient(145deg, #f0e7df 0%, #ddd3c6 100%);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__product-title {
+      margin: 0;
+      font-size: 1.02rem;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__product-meta {
+      display: grid;
+      gap: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__product-kicker,
+    #shopify-section-{{ section.id }} .stikrly-homepage__product-price {
+      margin: 0;
+      color: var(--stikrly-muted);
+      font-size: 0.84rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__values {
+      margin-bottom: 64px;
+      padding: 24px 0;
+      border-top: 1px solid var(--stikrly-line);
+      border-bottom: 1px solid var(--stikrly-line);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__value-card {
+      display: grid;
+      gap: 10px;
+      padding: 18px 18px 20px;
+      background: var(--stikrly-paper-alt);
+      border: 1px solid var(--stikrly-line);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__value-card h3,
+    #shopify-section-{{ section.id }} .stikrly-homepage__story-copy h2,
+    #shopify-section-{{ section.id }} .stikrly-homepage__utility-title {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__value-card h3 {
+      font-size: 1.12rem;
+      line-height: 1.2;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__value-copy,
+    #shopify-section-{{ section.id }} .stikrly-homepage__story-copy .rte p,
+    #shopify-section-{{ section.id }} .stikrly-homepage__utility-copy {
+      margin: 0;
+      color: var(--stikrly-muted);
+      line-height: 1.75;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__story-copy .rte {
+      display: grid;
+      gap: 12px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__story {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__story-media {
+      min-height: 620px;
+      overflow: hidden;
+      border: 1px solid var(--stikrly-line);
+      background:
+        radial-gradient(circle at top left, rgba(212, 75, 52, 0.22), transparent 32%),
+        linear-gradient(145deg, #efe7dd 0%, #d3c4b4 100%);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__story-copy {
+      display: grid;
+      gap: 18px;
+      padding: clamp(8px, 2vw, 20px);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__story-copy h2 {
+      font-size: clamp(1.9rem, 4vw, 3.4rem);
+      line-height: 0.98;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__utility-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__utility-card {
+      display: grid;
+      gap: 14px;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__utility-media {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border: 1px solid var(--stikrly-line);
+      background:
+        radial-gradient(circle at top left, rgba(212, 75, 52, 0.2), transparent 30%),
+        linear-gradient(145deg, #efe7dd 0%, #d3c4b4 100%);
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__utility-body {
+      display: grid;
+      gap: 8px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__closing {
+      margin-top: 64px;
+      padding-top: 18px;
+      border-top: 1px solid var(--stikrly-line);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    #shopify-section-{{ section.id }} .stikrly-homepage__closing p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--stikrly-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media screen and (max-width: 989px) {
+      #shopify-section-{{ section.id }} .stikrly-homepage__hero,
+      #shopify-section-{{ section.id }} .stikrly-homepage__manifesto,
+      #shopify-section-{{ section.id }} .stikrly-homepage__story {
+        grid-template-columns: 1fr;
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__hero-panel,
+      #shopify-section-{{ section.id }} .stikrly-homepage__hero-media,
+      #shopify-section-{{ section.id }} .stikrly-homepage__manifesto-media,
+      #shopify-section-{{ section.id }} .stikrly-homepage__story-media {
+        min-height: 520px;
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__category-grid,
+      #shopify-section-{{ section.id }} .stikrly-homepage__product-grid,
+      #shopify-section-{{ section.id }} .stikrly-homepage__value-grid,
+      #shopify-section-{{ section.id }} .stikrly-homepage__utility-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--square,
+      #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--portrait,
+      #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--wide,
+      #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--feature {
+        grid-column: span 6;
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} .stikrly-homepage__shell {
+        width: min(100%, calc(100% - 24px));
+        padding: 16px 0 56px;
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__hero-panel,
+      #shopify-section-{{ section.id }} .stikrly-homepage__hero-media,
+      #shopify-section-{{ section.id }} .stikrly-homepage__manifesto-media,
+      #shopify-section-{{ section.id }} .stikrly-homepage__story-media {
+        min-height: 420px;
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__hero-panel,
+      #shopify-section-{{ section.id }} .stikrly-homepage__manifesto-copy {
+        padding: 20px;
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__hero-note,
+      #shopify-section-{{ section.id }} .stikrly-homepage__category-grid,
+      #shopify-section-{{ section.id }} .stikrly-homepage__product-grid,
+      #shopify-section-{{ section.id }} .stikrly-homepage__value-grid,
+      #shopify-section-{{ section.id }} .stikrly-homepage__utility-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--square,
+      #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--portrait,
+      #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--wide,
+      #shopify-section-{{ section.id }} .stikrly-homepage__gallery-card--feature {
+        grid-column: span 2;
+        aspect-ratio: 4 / 5;
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__hero-card {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        grid-template-columns: 1fr;
+      }
+
+      #shopify-section-{{ section.id }} .stikrly-homepage__closing {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+  </style>
+
+  <div class="stikrly-homepage__shell">
+    <div class="stikrly-homepage__hero">
+      <div class="stikrly-homepage__hero-panel">
+        <div class="stikrly-homepage__hero-copy">
+          <p class="stikrly-homepage__eyebrow">{{ section.settings.brand_label | default: shop.name }}</p>
+          <h1 class="stikrly-homepage__title">{{ section.settings.hero_heading | newline_to_br }}</h1>
+          {% if section.settings.hero_body != blank %}
+            <div class="stikrly-homepage__hero-text rte">{{ section.settings.hero_body }}</div>
+          {% endif %}
+          <div class="stikrly-homepage__hero-actions">
+            {% if section.settings.hero_button_label != blank %}
+              <a class="stikrly-homepage__button" href="{{ section.settings.hero_button_link | default: routes.all_products_collection_url }}">
+                {{ section.settings.hero_button_label }}
+              </a>
+            {% endif %}
+            {% if section.settings.hero_secondary_label != blank %}
+              <a class="stikrly-homepage__text-link" href="{{ section.settings.hero_secondary_link | default: routes.all_products_collection_url }}">
+                {{ section.settings.hero_secondary_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="stikrly-homepage__hero-note">
+          <div>
+            <strong>{{ section.settings.hero_note_heading }}</strong>
+            <span>{{ section.settings.hero_note_text }}</span>
+          </div>
+          <div>
+            <strong>{{ section.settings.hero_note_heading_two }}</strong>
+            <span>{{ section.settings.hero_note_text_two }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stikrly-homepage__hero-media">
+        {% if hero_image != blank %}
+          {{
+            hero_image
+            | image_url: width: 1800
+            | image_tag:
+              loading: 'lazy',
+              widths: '720, 960, 1200, 1600, 1800',
+              sizes: '(min-width: 990px) 56vw, 100vw'
+          }}
+        {% else %}
+          <div class="stikrly-homepage__placeholder"></div>
+        {% endif %}
+
+        <div class="stikrly-homepage__hero-card">
+          <div>
+            <strong>{{ section.settings.hero_media_label }}</strong>
+            <p>{{ section.settings.hero_media_heading }}</p>
+          </div>
+          <span>{{ section.settings.hero_media_note }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stikrly-homepage__section-heading">
+      <div>
+        <p class="stikrly-homepage__eyebrow">{{ section.settings.categories_label }}</p>
+        <h2>{{ section.settings.categories_heading }}</h2>
+      </div>
+      <p class="stikrly-homepage__section-copy">{{ section.settings.categories_copy }}</p>
+    </div>
+
+    <div class="stikrly-homepage__category-grid">
+      {% assign category_index = 0 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'category_card' %}
+          {% assign category_index = category_index | plus: 1 %}
+          {% liquid
+            assign card_title = block.settings.heading
+            assign card_copy = block.settings.subtext
+            assign card_link = block.settings.link
+            assign card_image = block.settings.image
+
+            if block.settings.collection != blank
+              assign card_link = card_link | default: block.settings.collection.url
+              assign card_title = card_title | default: block.settings.collection.title
+              if card_image == blank
+                assign card_image = block.settings.collection.featured_image
+              endif
+              if card_image == blank and block.settings.collection.products_count > 0
+                assign card_image = block.settings.collection.products.first.featured_media.preview_image
+              endif
+            endif
+
+            if card_image == blank and source_collection != blank and source_collection.products_count > 0
+              assign fallback_index = category_index | minus: 1
+              assign fallback_product = source_collection.products[fallback_index]
+              if fallback_product == blank
+                assign fallback_product = source_collection.products.first
+              endif
+              if fallback_product != blank
+                assign card_image = fallback_product.featured_media.preview_image
+                assign card_link = card_link | default: fallback_product.url
+              endif
+            endif
+          %}
+
+          <a
+            class="stikrly-homepage__category-card"
+            href="{{ card_link | default: routes.all_products_collection_url }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="stikrly-homepage__category-image">
+              {% if card_image != blank %}
+                {{
+                  card_image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '360, 540, 720, 900',
+                    sizes: '(min-width: 990px) 25vw, 100vw'
+                }}
+              {% else %}
+                <div class="stikrly-homepage__placeholder"></div>
+              {% endif %}
+            </div>
+            <div class="stikrly-homepage__category-content">
+              <p class="stikrly-homepage__eyebrow">{{ block.settings.eyebrow }}</p>
+              <h3 class="stikrly-homepage__category-title">{{ card_title }}</h3>
+              {% if card_copy != blank %}
+                <p class="stikrly-homepage__category-copy">{{ card_copy }}</p>
+              {% endif %}
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="stikrly-homepage__gallery">
+      <div class="stikrly-homepage__section-heading">
+        <div>
+          <p class="stikrly-homepage__eyebrow">{{ section.settings.gallery_label }}</p>
+          <h2>{{ section.settings.gallery_heading }}</h2>
+        </div>
+        <p class="stikrly-homepage__section-copy">{{ section.settings.gallery_copy }}</p>
+      </div>
+
+      <div class="stikrly-homepage__gallery-grid">
+        {% assign gallery_index = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'gallery_image' %}
+            {% assign gallery_index = gallery_index | plus: 1 %}
+            {% liquid
+              assign gallery_link = block.settings.link
+              assign gallery_image = block.settings.image
+
+              if block.settings.collection != blank
+                assign gallery_link = gallery_link | default: block.settings.collection.url
+                if gallery_image == blank
+                  assign gallery_image = block.settings.collection.featured_image
+                endif
+                if gallery_image == blank and block.settings.collection.products_count > 0
+                  assign gallery_image = block.settings.collection.products.first.featured_media.preview_image
+                endif
+              endif
+
+              if gallery_image == blank and source_collection != blank and source_collection.products_count > 0
+                assign fallback_index = gallery_index | minus: 1
+                assign fallback_product = source_collection.products[fallback_index]
+                if fallback_product == blank
+                  assign fallback_product = source_collection.products.first
+                endif
+                if fallback_product != blank
+                  assign gallery_image = fallback_product.featured_media.preview_image
+                  assign gallery_link = gallery_link | default: fallback_product.url
+                endif
+              endif
+            %}
+
+            <a
+              class="stikrly-homepage__gallery-card stikrly-homepage__gallery-card--{{ block.settings.card_size }}"
+              href="{{ gallery_link | default: routes.all_products_collection_url }}"
+              {{ block.shopify_attributes }}
+            >
+              {% if gallery_image != blank %}
+                {{
+                  gallery_image
+                  | image_url: width: 1400
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '480, 720, 960, 1200, 1400',
+                    sizes: '(min-width: 990px) 40vw, 100vw'
+                }}
+              {% else %}
+                <div class="stikrly-homepage__placeholder"></div>
+              {% endif %}
+              {% if block.settings.caption != blank %}
+                <div class="stikrly-homepage__gallery-caption">
+                  <span>{{ block.settings.caption }}</span>
+                </div>
+              {% endif %}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="stikrly-homepage__manifesto">
+      <div class="stikrly-homepage__manifesto-media">
+        {% if manifesto_image != blank %}
+          {{
+            manifesto_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              widths: '720, 960, 1200, 1600',
+              sizes: '(min-width: 990px) 40vw, 100vw'
+          }}
+        {% else %}
+          <div class="stikrly-homepage__placeholder"></div>
+        {% endif %}
+      </div>
+      <div class="stikrly-homepage__manifesto-copy">
+        <p class="stikrly-homepage__eyebrow">{{ section.settings.manifesto_label }}</p>
+        <h2>{{ section.settings.manifesto_heading | newline_to_br }}</h2>
+        {% if section.settings.manifesto_body != blank %}
+          <div class="rte">{{ section.settings.manifesto_body }}</div>
+        {% endif %}
+        {% if section.settings.manifesto_button_label != blank %}
+          <div>
+            <a class="stikrly-homepage__button" href="{{ section.settings.manifesto_button_link | default: routes.all_products_collection_url }}">
+              {{ section.settings.manifesto_button_label }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="stikrly-homepage__product-section">
+      <div class="stikrly-homepage__section-heading">
+        <div>
+          <p class="stikrly-homepage__eyebrow">{{ section.settings.products_label }}</p>
+          <h2>{{ section.settings.products_heading }}</h2>
+        </div>
+        <p class="stikrly-homepage__section-copy">{{ section.settings.products_copy }}</p>
+      </div>
+
+      <div class="stikrly-homepage__product-grid">
+        {% if source_collection != blank and source_collection.products_count > 0 %}
+          {% for product in source_collection.products limit: featured_products_count %}
+            <a class="stikrly-homepage__product-card" href="{{ product.url }}">
+              <div class="stikrly-homepage__product-media">
+                {% if product.featured_media != blank %}
+                  {{
+                    product.featured_media.preview_image
+                    | image_url: width: 1000
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '360, 540, 720, 900, 1000',
+                      sizes: '(min-width: 990px) 25vw, 100vw'
+                  }}
+                {% else %}
+                  <div class="stikrly-homepage__placeholder"></div>
+                {% endif %}
+              </div>
+              <div class="stikrly-homepage__product-meta">
+                <p class="stikrly-homepage__product-kicker">{{ section.settings.products_card_label }}</p>
+                <h3 class="stikrly-homepage__product-title">{{ product.title }}</h3>
+                <div class="stikrly-homepage__product-price">
+                  {% render 'price', product_resource: product %}
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        {% else %}
+          {% for index in (1..featured_products_count) %}
+            <div class="stikrly-homepage__product-card">
+              <div class="stikrly-homepage__product-media">
+                <div class="stikrly-homepage__placeholder"></div>
+              </div>
+              <div class="stikrly-homepage__product-meta">
+                <p class="stikrly-homepage__product-kicker">{{ section.settings.products_card_label }}</p>
+                <h3 class="stikrly-homepage__product-title">Editorial product {{ index }}</h3>
+                <p class="stikrly-homepage__product-price">Assign a featured collection in the theme editor</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="stikrly-homepage__values">
+      <div class="stikrly-homepage__section-heading">
+        <div>
+          <p class="stikrly-homepage__eyebrow">{{ section.settings.values_label }}</p>
+          <h2>{{ section.settings.values_heading }}</h2>
+        </div>
+        <p class="stikrly-homepage__section-copy">{{ section.settings.values_copy }}</p>
+      </div>
+
+      <div class="stikrly-homepage__value-grid">
+        {% for block in section.blocks %}
+          {% if block.type == 'value_point' %}
+            <div class="stikrly-homepage__value-card" {{ block.shopify_attributes }}>
+              <p class="stikrly-homepage__eyebrow">{{ block.settings.eyebrow }}</p>
+              <h3>{{ block.settings.heading }}</h3>
+              <p class="stikrly-homepage__value-copy">{{ block.settings.text }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="stikrly-homepage__story">
+      <div class="stikrly-homepage__story-media">
+        {% if story_image != blank %}
+          {{
+            story_image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              widths: '720, 960, 1200, 1600',
+              sizes: '(min-width: 990px) 52vw, 100vw'
+          }}
+        {% else %}
+          <div class="stikrly-homepage__placeholder"></div>
+        {% endif %}
+      </div>
+      <div class="stikrly-homepage__story-copy">
+        <p class="stikrly-homepage__eyebrow">{{ section.settings.story_label }}</p>
+        <h2>{{ section.settings.story_heading | newline_to_br }}</h2>
+        {% if section.settings.story_body != blank %}
+          <div class="rte">{{ section.settings.story_body }}</div>
+        {% endif %}
+        {% if section.settings.story_button_label != blank %}
+          <div>
+            <a class="stikrly-homepage__text-link" href="{{ section.settings.story_button_link | default: routes.all_products_collection_url }}">
+              {{ section.settings.story_button_label }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="stikrly-homepage__section-heading">
+      <div>
+        <p class="stikrly-homepage__eyebrow">{{ section.settings.utility_label }}</p>
+        <h2>{{ section.settings.utility_heading }}</h2>
+      </div>
+      <p class="stikrly-homepage__section-copy">{{ section.settings.utility_copy }}</p>
+    </div>
+
+    <div class="stikrly-homepage__utility-grid">
+      {% assign utility_index = 0 %}
+      {% for block in section.blocks %}
+        {% if block.type == 'utility_tile' %}
+          {% assign utility_index = utility_index | plus: 1 %}
+          {% liquid
+            assign utility_link = block.settings.link
+            assign utility_image = block.settings.image
+            assign utility_title = block.settings.heading
+
+            if block.settings.collection != blank
+              assign utility_link = utility_link | default: block.settings.collection.url
+              assign utility_title = utility_title | default: block.settings.collection.title
+              if utility_image == blank
+                assign utility_image = block.settings.collection.featured_image
+              endif
+              if utility_image == blank and block.settings.collection.products_count > 0
+                assign utility_image = block.settings.collection.products.first.featured_media.preview_image
+              endif
+            endif
+
+            if utility_image == blank and source_collection != blank and source_collection.products_count > 0
+              assign fallback_index = utility_index | minus: 1
+              assign fallback_product = source_collection.products[fallback_index]
+              if fallback_product == blank
+                assign fallback_product = source_collection.products.first
+              endif
+              if fallback_product != blank
+                assign utility_image = fallback_product.featured_media.preview_image
+                assign utility_link = utility_link | default: fallback_product.url
+              endif
+            endif
+          %}
+
+          <a
+            class="stikrly-homepage__utility-card"
+            href="{{ utility_link | default: routes.all_products_collection_url }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="stikrly-homepage__utility-media">
+              {% if utility_image != blank %}
+                {{
+                  utility_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '480, 720, 960, 1200',
+                    sizes: '(min-width: 990px) 33vw, 100vw'
+                }}
+              {% else %}
+                <div class="stikrly-homepage__placeholder"></div>
+              {% endif %}
+            </div>
+            <div class="stikrly-homepage__utility-body">
+              <h3 class="stikrly-homepage__utility-title">{{ utility_title }}</h3>
+              {% if block.settings.text != blank %}
+                <p class="stikrly-homepage__utility-copy">{{ block.settings.text }}</p>
+              {% endif %}
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="stikrly-homepage__closing">
+      <p>{{ section.settings.closing_line }}</p>
+      {% if section.settings.closing_link_label != blank %}
+        <a class="stikrly-homepage__text-link" href="{{ section.settings.closing_link | default: routes.root_url }}">
+          {{ section.settings.closing_link_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stikrly Editorial Home",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "paper_color",
+      "label": "Paper",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "paper_alt_color",
+      "label": "Warm surface",
+      "default": "#f5efe8"
+    },
+    {
+      "type": "color",
+      "id": "ink_color",
+      "label": "Ink",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "muted_color",
+      "label": "Muted text",
+      "default": "#6c665f"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#d44b34"
+    },
+    {
+      "type": "color",
+      "id": "dark_color",
+      "label": "Dark surface",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Border",
+      "default": "#e5ddd4"
+    },
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "brand_label",
+      "label": "Brand label",
+      "default": "Stikrly"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_heading",
+      "label": "Heading",
+      "default": "MAKE YOUR\nSPACE SPEAK"
+    },
+    {
+      "type": "richtext",
+      "id": "hero_body",
+      "label": "Body",
+      "default": "<p>A calm editorial homepage for modern interiors, designed to feel visual, premium, and instantly shoppable.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_button_label",
+      "label": "Primary button label",
+      "default": "Shop the edit"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "hero_secondary_label",
+      "label": "Secondary link label",
+      "default": "View collections"
+    },
+    {
+      "type": "url",
+      "id": "hero_secondary_link",
+      "label": "Secondary link"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "hero_media_label",
+      "label": "Hero media label",
+      "default": "New drop"
+    },
+    {
+      "type": "text",
+      "id": "hero_media_heading",
+      "label": "Hero media heading",
+      "default": "Objects, prints, and details that change the tone of a room."
+    },
+    {
+      "type": "text",
+      "id": "hero_media_note",
+      "label": "Hero media note",
+      "default": "Curated for modern spaces"
+    },
+    {
+      "type": "text",
+      "id": "hero_note_heading",
+      "label": "Hero note heading",
+      "default": "Editorial curation"
+    },
+    {
+      "type": "text",
+      "id": "hero_note_text",
+      "label": "Hero note text",
+      "default": "Bold layouts, quiet color, and flexible product storytelling."
+    },
+    {
+      "type": "text",
+      "id": "hero_note_heading_two",
+      "label": "Second hero note heading",
+      "default": "Built for Shopify"
+    },
+    {
+      "type": "text",
+      "id": "hero_note_text_two",
+      "label": "Second hero note text",
+      "default": "Everything here stays editable in the Theme Editor after launch."
+    },
+    {
+      "type": "header",
+      "content": "Categories"
+    },
+    {
+      "type": "text",
+      "id": "categories_label",
+      "label": "Label",
+      "default": "Shop by category"
+    },
+    {
+      "type": "text",
+      "id": "categories_heading",
+      "label": "Heading",
+      "default": "Curated categories"
+    },
+    {
+      "type": "text",
+      "id": "categories_copy",
+      "label": "Copy",
+      "default": "A compact grid that mirrors the design reference and gives the homepage a clear browsing rhythm."
+    },
+    {
+      "type": "header",
+      "content": "Gallery"
+    },
+    {
+      "type": "text",
+      "id": "gallery_label",
+      "label": "Label",
+      "default": "Inside the collection"
+    },
+    {
+      "type": "text",
+      "id": "gallery_heading",
+      "label": "Heading",
+      "default": "Visual rhythm"
+    },
+    {
+      "type": "text",
+      "id": "gallery_copy",
+      "label": "Copy",
+      "default": "A mixed-size editorial grid for image-led storytelling, campaign shots, and room moments."
+    },
+    {
+      "type": "header",
+      "content": "Manifesto"
+    },
+    {
+      "type": "text",
+      "id": "manifesto_label",
+      "label": "Label",
+      "default": "Manifesto collection"
+    },
+    {
+      "type": "textarea",
+      "id": "manifesto_heading",
+      "label": "Heading",
+      "default": "ART DIRECTION\nMEETS COMMERCE"
+    },
+    {
+      "type": "richtext",
+      "id": "manifesto_body",
+      "label": "Body",
+      "default": "<p>Use this section for the collection campaign, a launch story, or a focused message around your strongest category.</p>"
+    },
+    {
+      "type": "text",
+      "id": "manifesto_button_label",
+      "label": "Button label",
+      "default": "Explore the collection"
+    },
+    {
+      "type": "url",
+      "id": "manifesto_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "manifesto_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Featured products"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "products_label",
+      "label": "Label",
+      "default": "Featured pieces"
+    },
+    {
+      "type": "text",
+      "id": "products_heading",
+      "label": "Heading",
+      "default": "Edit the best sellers"
+    },
+    {
+      "type": "text",
+      "id": "products_copy",
+      "label": "Copy",
+      "default": "This strip pulls directly from the selected collection, so it stays connected to your real catalog."
+    },
+    {
+      "type": "text",
+      "id": "products_card_label",
+      "label": "Product card label",
+      "default": "Featured"
+    },
+    {
+      "type": "range",
+      "id": "featured_products_count",
+      "label": "Products to show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Value points"
+    },
+    {
+      "type": "text",
+      "id": "values_label",
+      "label": "Label",
+      "default": "The Stikrly promise"
+    },
+    {
+      "type": "text",
+      "id": "values_heading",
+      "label": "Heading",
+      "default": "Designed to feel premium"
+    },
+    {
+      "type": "text",
+      "id": "values_copy",
+      "label": "Copy",
+      "default": "Short brand pillars that echo the design reference and strengthen trust without adding clutter."
+    },
+    {
+      "type": "header",
+      "content": "Story"
+    },
+    {
+      "type": "text",
+      "id": "story_label",
+      "label": "Label",
+      "default": "The story"
+    },
+    {
+      "type": "textarea",
+      "id": "story_heading",
+      "label": "Heading",
+      "default": "A HOMEPAGE\nWITH DEPTH"
+    },
+    {
+      "type": "richtext",
+      "id": "story_body",
+      "label": "Body",
+      "default": "<p>Use this space for founder copy, material quality, or the idea behind the collection. It is intentionally simple so the layout does the work.</p>"
+    },
+    {
+      "type": "text",
+      "id": "story_button_label",
+      "label": "Link label",
+      "default": "Read the story"
+    },
+    {
+      "type": "url",
+      "id": "story_button_link",
+      "label": "Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "story_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Utility tiles"
+    },
+    {
+      "type": "text",
+      "id": "utility_label",
+      "label": "Label",
+      "default": "More to explore"
+    },
+    {
+      "type": "text",
+      "id": "utility_heading",
+      "label": "Heading",
+      "default": "Browse the next layer"
+    },
+    {
+      "type": "text",
+      "id": "utility_copy",
+      "label": "Copy",
+      "default": "Flexible tiles for supporting categories, room-based edits, or service links."
+    },
+    {
+      "type": "header",
+      "content": "Closing row"
+    },
+    {
+      "type": "text",
+      "id": "closing_line",
+      "label": "Line",
+      "default": "Minimal form. Strong feeling. Designed for scrolling and shopping."
+    },
+    {
+      "type": "text",
+      "id": "closing_link_label",
+      "label": "Link label",
+      "default": "Visit the catalog"
+    },
+    {
+      "type": "url",
+      "id": "closing_link",
+      "label": "Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_card",
+      "name": "Category card",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "Category"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Featured category"
+        },
+        {
+          "type": "textarea",
+          "id": "subtext",
+          "label": "Text",
+          "default": "Short supporting copy for the category card."
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Override link"
+        }
+      ]
+    },
+    {
+      "type": "gallery_image",
+      "name": "Gallery image",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Campaign frame"
+        },
+        {
+          "type": "select",
+          "id": "card_size",
+          "label": "Card size",
+          "default": "portrait",
+          "options": [
+            {
+              "value": "square",
+              "label": "Square"
+            },
+            {
+              "value": "portrait",
+              "label": "Portrait"
+            },
+            {
+              "value": "wide",
+              "label": "Wide"
+            },
+            {
+              "value": "feature",
+              "label": "Feature"
+            }
+          ]
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "value_point",
+      "name": "Value point",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Premium detail"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Use one or two sentences to explain the value behind the product or service."
+        }
+      ]
+    },
+    {
+      "type": "utility_tile",
+      "name": "Utility tile",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Supporting link"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Use this tile for a category, guide, or another conversion path."
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stikrly Editorial Home",
+      "blocks": [
+        {
+          "type": "category_card"
+        },
+        {
+          "type": "category_card"
+        },
+        {
+          "type": "category_card"
+        },
+        {
+          "type": "category_card"
+        },
+        {
+          "type": "gallery_image"
+        },
+        {
+          "type": "gallery_image"
+        },
+        {
+          "type": "gallery_image"
+        },
+        {
+          "type": "gallery_image"
+        },
+        {
+          "type": "value_point"
+        },
+        {
+          "type": "value_point"
+        },
+        {
+          "type": "value_point"
+        },
+        {
+          "type": "utility_tile"
+        },
+        {
+          "type": "utility_tile"
+        },
+        {
+          "type": "utility_tile"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
