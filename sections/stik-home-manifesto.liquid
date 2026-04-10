@@ -1,0 +1,182 @@
+{% liquid
+  assign manifesto_collection = section.settings.collection
+  if manifesto_collection == blank
+    assign manifesto_collection = collections['all']
+  endif
+%}
+
+<section class="stik-home__section stik-home__manifesto">
+  <div class="stik-home__container">
+    <div class="stik-home__statement">
+      <h2 class="stik-home__statement-title">
+        {{ section.settings.heading_prefix }}
+        <span>{{ section.settings.heading_accent }}</span>
+      </h2>
+      <p>{{ section.settings.copy }}</p>
+    </div>
+
+    <div class="stik-home__manifesto-grid">
+      {% if manifesto_collection != blank and manifesto_collection.products_count > 0 %}
+        {% for product in manifesto_collection.products limit: 3 %}
+          {% liquid
+            assign overlay_title_key = 'card_' | append: forloop.index | append: '_title'
+            assign overlay_copy_key = 'card_' | append: forloop.index | append: '_copy'
+          %}
+          <article class="stik-home__manifesto-card">
+            <div class="stik-home__manifesto-media">
+              {% if product.featured_media != blank %}
+                {{
+                  product.featured_media.preview_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '360, 540, 720, 960, 1200',
+                    sizes: '(min-width: 900px) 31vw, 100vw'
+                }}
+              {% else %}
+                <div class="stik-home__placeholder"></div>
+              {% endif %}
+              <div class="stik-home__manifesto-overlay">
+                <div>
+                  <strong>{{ section.settings[overlay_title_key] }}</strong>
+                  <span>{{ section.settings[overlay_copy_key] }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="stik-home__manifesto-meta">
+              <div>
+                <span class="stik-home__manifesto-kicker">{{ section.settings.kicker }}</span>
+                <p class="stik-home__manifesto-price">{{ product.price | money }}</p>
+              </div>
+              <a class="stik-home__manifesto-cart" href="{{ product.url }}">{{ section.settings.button_label }}</a>
+            </div>
+          </article>
+        {% endfor %}
+      {% else %}
+        {% for index in (1..3) %}
+          {% assign overlay_title_key = 'card_' | append: index | append: '_title' %}
+          {% assign overlay_copy_key = 'card_' | append: index | append: '_copy' %}
+          <article class="stik-home__manifesto-card">
+            <div class="stik-home__manifesto-media">
+              <div class="stik-home__placeholder"></div>
+              <div class="stik-home__manifesto-overlay">
+                <div>
+                  <strong>{{ section.settings[overlay_title_key] }}</strong>
+                  <span>{{ section.settings[overlay_copy_key] }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="stik-home__manifesto-meta">
+              <div>
+                <span class="stik-home__manifesto-kicker">{{ section.settings.kicker }}</span>
+                <p class="stik-home__manifesto-price">$29.99</p>
+              </div>
+              <span class="stik-home__manifesto-cart">{{ section.settings.button_label }}</span>
+            </div>
+          </article>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="stik-home__manifesto-actions">
+      <a class="stik-home__text-button" href="{{ section.settings.explore_link | default: manifesto_collection.url | default: routes.all_products_collection_url }}">
+        {{ section.settings.explore_label }}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stik Home Manifesto",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading_prefix",
+      "label": "Heading prefix",
+      "default": "MANIFESTO"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "COLLECTION"
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Copy",
+      "default": "Bold statements for bold minds. Typography-driven designs that challenge the status quo."
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Price kicker",
+      "default": "Manifesto Series"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Card button label",
+      "default": "Add to cart"
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Card 1 overlay title",
+      "default": "MAKE IT BOLD"
+    },
+    {
+      "type": "text",
+      "id": "card_1_copy",
+      "label": "Card 1 overlay copy",
+      "default": "EXPRESS YOURSELF UNAPOLOGETICALLY"
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Card 2 overlay title",
+      "default": "NO RULES"
+    },
+    {
+      "type": "text",
+      "id": "card_2_copy",
+      "label": "Card 2 overlay copy",
+      "default": "BREAK THE CONVENTIONAL"
+    },
+    {
+      "type": "text",
+      "id": "card_3_title",
+      "label": "Card 3 overlay title",
+      "default": "STAY LOUD"
+    },
+    {
+      "type": "text",
+      "id": "card_3_copy",
+      "label": "Card 3 overlay copy",
+      "default": "YOUR VOICE MATTERS"
+    },
+    {
+      "type": "text",
+      "id": "explore_label",
+      "label": "Explore button label",
+      "default": "Explore Full Collection"
+    },
+    {
+      "type": "url",
+      "id": "explore_link",
+      "label": "Explore button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Manifesto"
+    }
+  ]
+}
+{% endschema %}

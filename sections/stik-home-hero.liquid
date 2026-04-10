@@ -1,0 +1,231 @@
+{% liquid
+  assign fallback_collection = section.settings.fallback_collection
+  assign hero_image = section.settings.hero_image
+  if hero_image == blank and fallback_collection != blank and fallback_collection.products_count > 0
+    assign hero_image = fallback_collection.products.first.featured_media.preview_image
+  endif
+
+  assign primary_link = section.settings.primary_button_link | default: fallback_collection.url | default: routes.all_products_collection_url
+  assign secondary_link = section.settings.secondary_button_link | default: fallback_collection.url | default: routes.all_products_collection_url
+%}
+
+<div class="stik-home__container">
+  <section class="stik-home__hero">
+    <div class="stik-home__hero-copy">
+      <div class="stik-home__rating">
+        <span class="stik-home__stars">{{ section.settings.rating_stars }}</span>
+        <span>{{ section.settings.rating_text }}</span>
+      </div>
+
+      <h1 class="stik-home__hero-title">
+        {{ section.settings.title_lines | escape | newline_to_br }}<br>
+        <span>{{ section.settings.title_accent }}</span>
+      </h1>
+
+      <p class="stik-home__hero-body">{{ section.settings.body_text }}</p>
+
+      <div class="stik-home__micro-list">
+        {% for index in (1..3) %}
+          {% assign micro_key = 'micro_' | append: index %}
+          {% if section.settings[micro_key] != blank %}
+            <span>{{ section.settings[micro_key] }}</span>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="stik-home__hero-actions">
+        <a class="stik-home__button" href="{{ primary_link }}">{{ section.settings.primary_button_label }}</a>
+        <a class="stik-home__text-button" href="{{ secondary_link }}">{{ section.settings.secondary_button_label }}</a>
+      </div>
+
+      <div class="stik-home__hero-stats">
+        {% for index in (1..3) %}
+          {% assign stat_value_key = 'stat_' | append: index | append: '_value' %}
+          {% assign stat_label_key = 'stat_' | append: index | append: '_label' %}
+          <div class="stik-home__hero-stat">
+            <strong>{{ section.settings[stat_value_key] }}</strong>
+            <span>{{ section.settings[stat_label_key] }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="stik-home__hero-media">
+      {% if hero_image != blank %}
+        {{
+          hero_image
+          | image_url: width: 1800
+          | image_tag:
+            loading: 'lazy',
+            widths: '720, 960, 1200, 1600, 1800',
+            sizes: '(min-width: 900px) 54vw, 100vw'
+        }}
+      {% else %}
+        <div class="stik-home__placeholder"></div>
+      {% endif %}
+
+      <div class="stik-home__trusted-badge">
+        <span>{{ section.settings.trusted_label }}</span>
+        <strong>{{ section.settings.trusted_value }}</strong>
+      </div>
+
+      <div class="stik-home__sale-badge">
+        <span>{{ section.settings.sale_label }}</span>
+        <strong>{{ section.settings.sale_value }}</strong>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "Stik Home Hero",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "fallback_collection",
+      "label": "Fallback collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "rating_stars",
+      "label": "Rating stars",
+      "default": "★★★★★"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.9/5 from 2,847 reviews"
+    },
+    {
+      "type": "textarea",
+      "id": "title_lines",
+      "label": "Heading lines",
+      "default": "MAKE\nYOUR\nSPACE"
+    },
+    {
+      "type": "text",
+      "id": "title_accent",
+      "label": "Accent line",
+      "default": "YOU"
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Body text",
+      "default": "Bold designs that speak volumes. Transform your space with our curated collection of minimalist posters and wall art."
+    },
+    {
+      "type": "text",
+      "id": "micro_1",
+      "label": "Micro point 1",
+      "default": "Premium Quality"
+    },
+    {
+      "type": "text",
+      "id": "micro_2",
+      "label": "Micro point 2",
+      "default": "Fast Shipping"
+    },
+    {
+      "type": "text",
+      "id": "micro_3",
+      "label": "Micro point 3",
+      "default": "30-Day Returns"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_label",
+      "label": "Primary button label",
+      "default": "Shop Collection"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_label",
+      "label": "Secondary button label",
+      "default": "View Bundles"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_value",
+      "label": "Stat 1 value",
+      "default": "500+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 label",
+      "default": "Designs"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_value",
+      "label": "Stat 2 value",
+      "default": "10K+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 label",
+      "default": "Happy Customers"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_value",
+      "label": "Stat 3 value",
+      "default": "★ 4.9"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 label",
+      "default": "Rating"
+    },
+    {
+      "type": "text",
+      "id": "trusted_label",
+      "label": "Trusted badge label",
+      "default": "Trusted by"
+    },
+    {
+      "type": "text",
+      "id": "trusted_value",
+      "label": "Trusted badge value",
+      "default": "10,000+"
+    },
+    {
+      "type": "text",
+      "id": "sale_label",
+      "label": "Sale badge label",
+      "default": "New arrivals"
+    },
+    {
+      "type": "text",
+      "id": "sale_value",
+      "label": "Sale badge value",
+      "default": "20% Off"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Hero"
+    }
+  ]
+}
+{% endschema %}

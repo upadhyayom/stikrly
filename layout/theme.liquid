@@ -30,6 +30,9 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
+    {% if request.page_type == 'index' %}
+      {{ 'stik-home.css' | asset_url | stylesheet_tag }}
+    {% endif %}
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
@@ -38,11 +41,13 @@
     {{ content_for_header }}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}{% if request.page_type == 'index' %} stik-homepage{% endif %}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
-    <div id="header-group">
-      {% sections 'header-group' %}
-    </div>
+    {% unless request.page_type == 'index' %}
+      <div id="header-group">
+        {% sections 'header-group' %}
+      </div>
+    {% endunless %}
 
     <script>
       // Inline header height and menu style calculations to prevent layout shift
@@ -123,9 +128,11 @@
       {{ content_for_layout }}
     </main>
 
-    <footer>
-      {% sections 'footer-group' %}
-    </footer>
+    {% unless request.page_type == 'index' %}
+      <footer>
+        {% sections 'footer-group' %}
+      </footer>
+    {% endunless %}
 
     {% render 'search-modal' %}
 

@@ -1,0 +1,113 @@
+<section class="stik-home__section stik-home__community">
+  <div class="stik-home__container">
+    <span class="stik-home__community-tag">{{ section.settings.tag }}</span>
+    <div class="stik-home__statement">
+      <h2 class="stik-home__statement-title">
+        {{ section.settings.heading_prefix }}
+        <span>{{ section.settings.heading_accent }}</span>
+      </h2>
+      <p>{{ section.settings.copy }}</p>
+    </div>
+
+    <div class="stik-home__community-grid">
+      {% for index in (1..4) %}
+        {% assign image_key = 'image_' | append: index %}
+        <div class="stik-home__community-tile">
+          {% if section.settings[image_key] != blank %}
+            {{
+              section.settings[image_key]
+              | image_url: width: 900
+              | image_tag:
+                loading: 'lazy',
+                widths: '240, 360, 540, 720, 900',
+                sizes: '(min-width: 900px) 23vw, 100vw'
+            }}
+          {% else %}
+            <div class="stik-home__placeholder"></div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <p>{{ section.settings.note }}</p>
+    <div style="margin-top: 18px;">
+      <a class="stik-home__community-button" href="{{ section.settings.button_link | default: 'https://instagram.com' }}" target="_blank" rel="noopener noreferrer">
+        {{ section.settings.button_label }}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stik Home Community",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tag",
+      "label": "Tag",
+      "default": "#STIKRLY"
+    },
+    {
+      "type": "text",
+      "id": "heading_prefix",
+      "label": "Heading prefix",
+      "default": "STYLED BY"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "OUR COMMUNITY"
+    },
+    {
+      "type": "text",
+      "id": "copy",
+      "label": "Copy",
+      "default": "Real homes, real style. See how our customers are making their spaces unique."
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Image 4"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note",
+      "default": "Share your Stikrly style and get featured"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Follow @Stikrly"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Community"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,165 @@
+<section class="stik-home__section">
+  <div class="stik-home__container">
+    <div class="stik-home__section-head">
+      <div>
+        <h2 class="stik-home__section-title">{{ section.settings.heading }}</h2>
+        <p class="stik-home__section-copy">{{ section.settings.copy }}</p>
+      </div>
+    </div>
+
+    <div class="stik-home__category-grid">
+      {% for index in (1..4) %}
+        {% liquid
+          assign collection_key = 'category_' | append: index | append: '_collection'
+          assign image_key = 'category_' | append: index | append: '_image'
+          assign title_key = 'category_' | append: index | append: '_title'
+          assign subtitle_key = 'category_' | append: index | append: '_subtitle'
+          assign collection = section.settings[collection_key]
+          assign image = section.settings[image_key]
+          if image == blank and collection != blank
+            assign image = collection.featured_image
+          endif
+          if image == blank and collection != blank and collection.products_count > 0
+            assign image = collection.products.first.featured_media.preview_image
+          endif
+        %}
+        <a class="stik-home__category-card" href="{{ collection.url | default: routes.all_products_collection_url }}">
+          <div class="stik-home__category-media">
+            {% if image != blank %}
+              {{
+                image
+                | image_url: width: 900
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '360, 540, 720, 900',
+                  sizes: '(min-width: 900px) 24vw, 100vw'
+              }}
+            {% else %}
+              <div class="stik-home__placeholder"></div>
+            {% endif %}
+          </div>
+          <div class="stik-home__category-overlay">
+            <div>
+              <strong>{{ section.settings[title_key] }}</strong>
+              <span>{{ section.settings[subtitle_key] }}</span>
+            </div>
+            <span class="stik-home__category-arrow">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stik Home Categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "SHOP BY CATEGORY"
+    },
+    {
+      "type": "text",
+      "id": "copy",
+      "label": "Copy",
+      "default": "Find your perfect piece"
+    },
+    {
+      "type": "collection",
+      "id": "category_1_collection",
+      "label": "Category 1 collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_1_image",
+      "label": "Category 1 image override"
+    },
+    {
+      "type": "text",
+      "id": "category_1_title",
+      "label": "Category 1 title",
+      "default": "Posters"
+    },
+    {
+      "type": "text",
+      "id": "category_1_subtitle",
+      "label": "Category 1 subtitle",
+      "default": "300+ designs"
+    },
+    {
+      "type": "collection",
+      "id": "category_2_collection",
+      "label": "Category 2 collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_2_image",
+      "label": "Category 2 image override"
+    },
+    {
+      "type": "text",
+      "id": "category_2_title",
+      "label": "Category 2 title",
+      "default": "Frames"
+    },
+    {
+      "type": "text",
+      "id": "category_2_subtitle",
+      "label": "Category 2 subtitle",
+      "default": "50+ designs"
+    },
+    {
+      "type": "collection",
+      "id": "category_3_collection",
+      "label": "Category 3 collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_3_image",
+      "label": "Category 3 image override"
+    },
+    {
+      "type": "text",
+      "id": "category_3_title",
+      "label": "Category 3 title",
+      "default": "Cozy Cards"
+    },
+    {
+      "type": "text",
+      "id": "category_3_subtitle",
+      "label": "Category 3 subtitle",
+      "default": "100+ designs"
+    },
+    {
+      "type": "collection",
+      "id": "category_4_collection",
+      "label": "Category 4 collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "category_4_image",
+      "label": "Category 4 image override"
+    },
+    {
+      "type": "text",
+      "id": "category_4_title",
+      "label": "Category 4 title",
+      "default": "Calendars"
+    },
+    {
+      "type": "text",
+      "id": "category_4_subtitle",
+      "label": "Category 4 subtitle",
+      "default": "20+ designs"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Categories"
+    }
+  ]
+}
+{% endschema %}

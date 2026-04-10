@@ -1,0 +1,221 @@
+<section class="stik-home__section">
+  <div class="stik-home__container">
+    <div class="stik-home__statement">
+      <h2 class="stik-home__statement-title">
+        {{ section.settings.heading_prefix }}
+        <span>{{ section.settings.heading_accent }}</span>
+      </h2>
+      <p>{{ section.settings.copy }}</p>
+    </div>
+
+    <div class="stik-home__promise-grid">
+      {% for index in (1..6) %}
+        {% liquid
+          assign icon_key = 'card_' | append: index | append: '_icon'
+          assign title_key = 'card_' | append: index | append: '_title'
+          assign text_key = 'card_' | append: index | append: '_text'
+        %}
+        <article class="stik-home__promise-card">
+          <span class="stik-home__promise-icon">
+            {% if section.settings[icon_key] == 'info' %}
+              {{ 'icon-info.svg' | inline_asset_content }}
+            {% else %}
+              <svg viewBox="0 0 20 20" fill="none">{% render 'icon', icon: section.settings[icon_key] %}</svg>
+            {% endif %}
+          </span>
+          <div>
+            <h3>{{ section.settings[title_key] }}</h3>
+            <p>{{ section.settings[text_key] }}</p>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stik Home Promise",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_prefix",
+      "label": "Heading prefix",
+      "default": "THE STIKRLY"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "PROMISE"
+    },
+    {
+      "type": "text",
+      "id": "copy",
+      "label": "Copy",
+      "default": "We're committed to delivering an exceptional experience from click to wall"
+    },
+    {
+      "type": "select",
+      "id": "card_1_icon",
+      "label": "Card 1 icon",
+      "default": "ruler",
+      "options": [
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "return", "label": "Return" },
+        { "value": "info", "label": "Info" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "card_1_title",
+      "label": "Card 1 title",
+      "default": "Premium Quality Guarantee"
+    },
+    {
+      "type": "textarea",
+      "id": "card_1_text",
+      "label": "Card 1 text",
+      "default": "Museum-grade paper with archival inks. If you're not satisfied, we'll make it right."
+    },
+    {
+      "type": "select",
+      "id": "card_2_icon",
+      "label": "Card 2 icon",
+      "default": "truck",
+      "options": [
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "return", "label": "Return" },
+        { "value": "info", "label": "Info" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "card_2_title",
+      "label": "Card 2 title",
+      "default": "Fast & Free Shipping"
+    },
+    {
+      "type": "textarea",
+      "id": "card_2_text",
+      "label": "Card 2 text",
+      "default": "Free shipping on orders over $50. Express shipping available. Track your order every step."
+    },
+    {
+      "type": "select",
+      "id": "card_3_icon",
+      "label": "Card 3 icon",
+      "default": "return",
+      "options": [
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "return", "label": "Return" },
+        { "value": "info", "label": "Info" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "card_3_title",
+      "label": "Card 3 title",
+      "default": "30-Day Free Returns"
+    },
+    {
+      "type": "textarea",
+      "id": "card_3_text",
+      "label": "Card 3 text",
+      "default": "Not in love with it? Return it within 30 days for a full refund, no questions asked."
+    },
+    {
+      "type": "select",
+      "id": "card_4_icon",
+      "label": "Card 4 icon",
+      "default": "lock",
+      "options": [
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "return", "label": "Return" },
+        { "value": "info", "label": "Info" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "card_4_title",
+      "label": "Card 4 title",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "textarea",
+      "id": "card_4_text",
+      "label": "Card 4 text",
+      "default": "256-bit SSL encryption. We accept all major credit cards, PayPal, and Apple Pay."
+    },
+    {
+      "type": "select",
+      "id": "card_5_icon",
+      "label": "Card 5 icon",
+      "default": "box",
+      "options": [
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "return", "label": "Return" },
+        { "value": "info", "label": "Info" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "card_5_title",
+      "label": "Card 5 title",
+      "default": "Premium Packaging"
+    },
+    {
+      "type": "textarea",
+      "id": "card_5_text",
+      "label": "Card 5 text",
+      "default": "Each print arrives in protective packaging designed to ensure perfect condition."
+    },
+    {
+      "type": "select",
+      "id": "card_6_icon",
+      "label": "Card 6 icon",
+      "default": "info",
+      "options": [
+        { "value": "ruler", "label": "Ruler" },
+        { "value": "box", "label": "Box" },
+        { "value": "truck", "label": "Truck" },
+        { "value": "lock", "label": "Lock" },
+        { "value": "return", "label": "Return" },
+        { "value": "info", "label": "Info" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "card_6_title",
+      "label": "Card 6 title",
+      "default": "Lifetime Support"
+    },
+    {
+      "type": "textarea",
+      "id": "card_6_text",
+      "label": "Card 6 text",
+      "default": "Our customer service team is here to help you, today and always."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Promise"
+    }
+  ]
+}
+{% endschema %}

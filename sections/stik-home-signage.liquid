@@ -1,0 +1,96 @@
+{% liquid
+  assign signage_collection = section.settings.collection
+  if signage_collection == blank
+    assign signage_collection = collections['all']
+  endif
+%}
+
+<section class="stik-home__section">
+  <div class="stik-home__container">
+    <div class="stik-home__section-head">
+      <div>
+        <h2 class="stik-home__section-title stik-home__signage-title">{{ section.settings.heading }}</h2>
+      </div>
+      <a class="stik-home__section-link" href="{{ section.settings.view_all_link | default: signage_collection.url | default: routes.all_products_collection_url }}">
+        {{ section.settings.view_all_label }}
+      </a>
+    </div>
+
+    <div class="stik-home__signage-grid">
+      {% if signage_collection != blank and signage_collection.products_count > 0 %}
+        {% for product in signage_collection.products limit: section.settings.products_to_show %}
+          <a class="stik-home__signage-card" href="{{ product.url }}">
+            <div class="stik-home__product-media">
+              {% if product.featured_media != blank %}
+                {{
+                  product.featured_media.preview_image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '240, 360, 540, 720, 900',
+                    sizes: '(min-width: 900px) 23vw, 100vw'
+                }}
+              {% else %}
+                <div class="stik-home__placeholder"></div>
+              {% endif %}
+            </div>
+            <h3>{{ product.title }}</h3>
+            <p>{{ product.price | money }}</p>
+          </a>
+        {% endfor %}
+      {% else %}
+        {% for index in (1..4) %}
+          <div class="stik-home__signage-card">
+            <div class="stik-home__product-media"><div class="stik-home__placeholder"></div></div>
+            <h3>Industrial Sign {{ index }}</h3>
+            <p>$19.99</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stik Home Signage",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "INDUSTRIAL SAFETY SIGNAGE"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "default": 4,
+      "min": 2,
+      "max": 4,
+      "step": 1
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Signage"
+    }
+  ]
+}
+{% endschema %}

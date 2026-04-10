@@ -1,0 +1,150 @@
+{% liquid
+  assign catalog_collection = section.settings.collection
+  if catalog_collection == blank
+    assign catalog_collection = collections['all']
+  endif
+%}
+
+<section class="stik-home__section">
+  <div class="stik-home__container">
+    <div class="stik-home__section-head">
+      <div>
+        <h2 class="stik-home__section-title">{{ section.settings.heading }}</h2>
+        <p class="stik-home__section-copy">{{ section.settings.copy }}</p>
+      </div>
+      <a class="stik-home__section-link" href="{{ section.settings.view_all_link | default: catalog_collection.url | default: routes.all_products_collection_url }}">
+        {{ section.settings.view_all_label }}
+      </a>
+    </div>
+
+    <div class="stik-home__product-grid">
+      {% if catalog_collection != blank and catalog_collection.products_count > 0 %}
+        {% for product in catalog_collection.products limit: section.settings.products_to_show %}
+          {% liquid
+            case forloop.index
+              when 1
+                assign rating_value = '4.9'
+                assign rating_count = '234'
+                assign rating_badge = 'BESTSELLER'
+              when 2
+                assign rating_value = '5'
+                assign rating_count = '189'
+                assign rating_badge = 'BESTSELLER'
+              when 3
+                assign rating_value = '4.8'
+                assign rating_count = '156'
+                assign rating_badge = blank
+              when 4
+                assign rating_value = '4.9'
+                assign rating_count = '201'
+                assign rating_badge = blank
+              when 5
+                assign rating_value = '5'
+                assign rating_count = '312'
+                assign rating_badge = 'BESTSELLER'
+              else
+                assign rating_value = '4.7'
+                assign rating_count = '143'
+                assign rating_badge = blank
+            endcase
+          %}
+          <a class="stik-home__product-card" href="{{ product.url }}">
+            <div class="stik-home__product-media">
+              {% if rating_badge != blank %}
+                <span class="stik-home__product-badge">{{ rating_badge }}</span>
+              {% endif %}
+              {% if product.featured_media != blank %}
+                {{
+                  product.featured_media.preview_image
+                  | image_url: width: 1200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '360, 540, 720, 960, 1200',
+                    sizes: '(min-width: 900px) 31vw, 100vw'
+                }}
+              {% else %}
+                <div class="stik-home__placeholder"></div>
+              {% endif %}
+            </div>
+            <div class="stik-home__product-meta">
+              <div class="stik-home__product-rating">
+                <span>★</span>
+                <span>{{ rating_value }}</span>
+                <span>({{ rating_count }})</span>
+              </div>
+              <h3 class="stik-home__product-title">{{ product.title }}</h3>
+              <p class="stik-home__product-price">{{ product.price | money }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      {% else %}
+        {% for index in (1..6) %}
+          <div class="stik-home__product-card">
+            <div class="stik-home__product-media">
+              <div class="stik-home__placeholder"></div>
+            </div>
+            <div class="stik-home__product-meta">
+              <div class="stik-home__product-rating">
+                <span>★</span>
+                <span>4.9</span>
+                <span>(234)</span>
+              </div>
+              <h3 class="stik-home__product-title">Featured poster {{ index }}</h3>
+              <p class="stik-home__product-price">$29.99</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stik Home Best Sellers",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "BEST SELLERS"
+    },
+    {
+      "type": "text",
+      "id": "copy",
+      "label": "Copy",
+      "default": "Our most loved designs"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "default": 6,
+      "min": 3,
+      "max": 6,
+      "step": 1
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Best Sellers"
+    }
+  ]
+}
+{% endschema %}

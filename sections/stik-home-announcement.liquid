@@ -1,0 +1,33 @@
+<div class="stik-home__announcement">
+  <div class="stik-home__announcement-inner">
+    <span>{{ section.settings.text }}</span>
+    {% if section.settings.show_dismiss %}
+      <button class="stik-home__announcement-dismiss" type="button" aria-label="Dismiss">×</button>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Stik Home Announcement",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement text",
+      "default": "FREE SHIPPING on orders over $50 20% OFF New Arrivals Limited Time Only"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dismiss",
+      "label": "Show dismiss icon",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Announcement"
+    }
+  ]
+}
+{% endschema %}

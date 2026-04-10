@@ -1,0 +1,255 @@
+<section class="stik-home__section stik-home__reviews">
+  <div class="stik-home__container">
+    <div class="stik-home__statement">
+      <h2 class="stik-home__statement-title">
+        {{ section.settings.heading_prefix }}
+        <span>{{ section.settings.heading_accent }}</span>
+      </h2>
+      <p>{{ section.settings.copy }}</p>
+    </div>
+
+    <div class="stik-home__metrics">
+      {% for index in (1..4) %}
+        {% liquid
+          assign value_key = 'metric_' | append: index | append: '_value'
+          assign label_key = 'metric_' | append: index | append: '_label'
+          assign accent_key = 'metric_' | append: index | append: '_accent'
+        %}
+        <div class="stik-home__metric">
+          <strong{% if section.settings[accent_key] %} class="is-accent"{% endif %}>{{ section.settings[value_key] }}</strong>
+          <span>{{ section.settings[label_key] }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="stik-home__review-grid">
+      {% for index in (1..3) %}
+        {% liquid
+          assign image_key = 'review_' | append: index | append: '_image'
+          assign text_key = 'review_' | append: index | append: '_text'
+          assign author_key = 'review_' | append: index | append: '_author'
+          assign role_key = 'review_' | append: index | append: '_role'
+        %}
+        <article class="stik-home__review-card">
+          <span class="stik-home__quote">”</span>
+          <div class="stik-home__review-stars">★★★★★</div>
+          <p>{{ section.settings[text_key] }}</p>
+          <div class="stik-home__review-author">
+            <div class="stik-home__review-avatar">
+              {% if section.settings[image_key] != blank %}
+                {{
+                  section.settings[image_key]
+                  | image_url: width: 120
+                  | image_tag: loading: 'lazy', widths: '60, 120', sizes: '46px'
+                }}
+              {% else %}
+                <div class="stik-home__placeholder"></div>
+              {% endif %}
+            </div>
+            <div>
+              <strong>{{ section.settings[author_key] }}</strong>
+              <span>{{ section.settings[role_key] }}</span>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <div class="stik-home__logo-strip">
+      {% for index in (1..3) %}
+        {% assign logo_key = 'logo_' | append: index %}
+        <span>{{ section.settings[logo_key] }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stik Home Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_prefix",
+      "label": "Heading prefix",
+      "default": "LOVED BY"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "THOUSANDS"
+    },
+    {
+      "type": "text",
+      "id": "copy",
+      "label": "Copy",
+      "default": "Don't just take our word for it - see what our customers are saying"
+    },
+    {
+      "type": "text",
+      "id": "metric_1_value",
+      "label": "Metric 1 value",
+      "default": "4.9/5"
+    },
+    {
+      "type": "text",
+      "id": "metric_1_label",
+      "label": "Metric 1 label",
+      "default": "Average Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "metric_1_accent",
+      "label": "Metric 1 accent",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "metric_2_value",
+      "label": "Metric 2 value",
+      "default": "2,847"
+    },
+    {
+      "type": "text",
+      "id": "metric_2_label",
+      "label": "Metric 2 label",
+      "default": "Total Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "metric_2_accent",
+      "label": "Metric 2 accent",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "metric_3_value",
+      "label": "Metric 3 value",
+      "default": "10,000+"
+    },
+    {
+      "type": "text",
+      "id": "metric_3_label",
+      "label": "Metric 3 label",
+      "default": "Happy Customers"
+    },
+    {
+      "type": "checkbox",
+      "id": "metric_3_accent",
+      "label": "Metric 3 accent",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "metric_4_value",
+      "label": "Metric 4 value",
+      "default": "89%"
+    },
+    {
+      "type": "text",
+      "id": "metric_4_label",
+      "label": "Metric 4 label",
+      "default": "Repeat Rate"
+    },
+    {
+      "type": "checkbox",
+      "id": "metric_4_accent",
+      "label": "Metric 4 accent",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "review_1_image",
+      "label": "Review 1 image"
+    },
+    {
+      "type": "textarea",
+      "id": "review_1_text",
+      "label": "Review 1 text",
+      "default": "Absolutely love the quality! The prints are stunning and the packaging was so premium. My clients always ask where I get these posters from."
+    },
+    {
+      "type": "text",
+      "id": "review_1_author",
+      "label": "Review 1 author",
+      "default": "Sarah Johnson"
+    },
+    {
+      "type": "text",
+      "id": "review_1_role",
+      "label": "Review 1 role",
+      "default": "Interior Designer"
+    },
+    {
+      "type": "image_picker",
+      "id": "review_2_image",
+      "label": "Review 2 image"
+    },
+    {
+      "type": "textarea",
+      "id": "review_2_text",
+      "label": "Review 2 text",
+      "default": "The manifesto collection completely transformed my workspace. Bold designs that actually make a statement. Shipping was super fast too!"
+    },
+    {
+      "type": "text",
+      "id": "review_2_author",
+      "label": "Review 2 author",
+      "default": "Emma Rodriguez"
+    },
+    {
+      "type": "text",
+      "id": "review_2_role",
+      "label": "Review 2 role",
+      "default": "Homeowner"
+    },
+    {
+      "type": "image_picker",
+      "id": "review_3_image",
+      "label": "Review 3 image"
+    },
+    {
+      "type": "textarea",
+      "id": "review_3_text",
+      "label": "Review 3 text",
+      "default": "Top-notch quality and design. The bundle deals are incredible value. This is now my go-to place for office decor."
+    },
+    {
+      "type": "text",
+      "id": "review_3_author",
+      "label": "Review 3 author",
+      "default": "Michael Chen"
+    },
+    {
+      "type": "text",
+      "id": "review_3_role",
+      "label": "Review 3 role",
+      "default": "Creative Director"
+    },
+    {
+      "type": "text",
+      "id": "logo_1",
+      "label": "Logo strip item 1",
+      "default": "Trustpilot Excellent"
+    },
+    {
+      "type": "text",
+      "id": "logo_2",
+      "label": "Logo strip item 2",
+      "default": "Google Reviews 4.9"
+    },
+    {
+      "type": "text",
+      "id": "logo_3",
+      "label": "Logo strip item 3",
+      "default": "Featured on Behance"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Reviews"
+    }
+  ]
+}
+{% endschema %}

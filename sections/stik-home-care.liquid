@@ -1,0 +1,143 @@
+<section class="stik-home__section">
+  <div class="stik-home__container">
+    <div class="stik-home__care">
+      <div class="stik-home__care-media">
+        {% if section.settings.image != blank %}
+          {{
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag:
+              loading: 'lazy',
+              widths: '720, 960, 1200, 1600',
+              sizes: '(min-width: 900px) 52vw, 100vw'
+          }}
+        {% else %}
+          <div class="stik-home__placeholder"></div>
+        {% endif %}
+      </div>
+      <div class="stik-home__care-content">
+        <p class="stik-home__eyebrow">{{ section.settings.eyebrow }}</p>
+        <h3>{{ section.settings.heading }}</h3>
+        <p>{{ section.settings.copy }}</p>
+        <ul class="stik-home__care-list">
+          {% for index in (1..4) %}
+            {% assign bullet_key = 'bullet_' | append: index %}
+            <li>{{ section.settings[bullet_key] }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="stik-home__payments">
+      <strong>{{ section.settings.payments_heading }}</strong>
+      <div class="stik-home__payments-list">
+        {% for index in (1..6) %}
+          {% assign payment_key = 'payment_' | append: index %}
+          <span>{{ section.settings[payment_key] }}</span>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stik Home Care",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Premium Unboxing Experience"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "PACKAGED WITH CARE & STYLE"
+    },
+    {
+      "type": "textarea",
+      "id": "copy",
+      "label": "Copy",
+      "default": "Every poster arrives in our signature packaging - protective, sustainable, and designed to impress. We use rigid mailers and acid-free tissue paper to ensure your prints arrive in perfect condition."
+    },
+    {
+      "type": "text",
+      "id": "bullet_1",
+      "label": "Bullet 1",
+      "default": "Rigid protective mailers prevent bending"
+    },
+    {
+      "type": "text",
+      "id": "bullet_2",
+      "label": "Bullet 2",
+      "default": "Acid-free tissue paper protection"
+    },
+    {
+      "type": "text",
+      "id": "bullet_3",
+      "label": "Bullet 3",
+      "default": "100% recyclable materials"
+    },
+    {
+      "type": "text",
+      "id": "bullet_4",
+      "label": "Bullet 4",
+      "default": "Branded unboxing experience"
+    },
+    {
+      "type": "text",
+      "id": "payments_heading",
+      "label": "Payments heading",
+      "default": "Secure Payment Methods"
+    },
+    {
+      "type": "text",
+      "id": "payment_1",
+      "label": "Payment 1",
+      "default": "Visa"
+    },
+    {
+      "type": "text",
+      "id": "payment_2",
+      "label": "Payment 2",
+      "default": "Mastercard"
+    },
+    {
+      "type": "text",
+      "id": "payment_3",
+      "label": "Payment 3",
+      "default": "Amex"
+    },
+    {
+      "type": "text",
+      "id": "payment_4",
+      "label": "Payment 4",
+      "default": "PayPal"
+    },
+    {
+      "type": "text",
+      "id": "payment_5",
+      "label": "Payment 5",
+      "default": "Apple Pay"
+    },
+    {
+      "type": "text",
+      "id": "payment_6",
+      "label": "Payment 6",
+      "default": "Google Pay"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Care"
+    }
+  ]
+}
+{% endschema %}

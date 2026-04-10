@@ -1,0 +1,90 @@
+<header class="stik-home__header">
+  <div class="stik-home__header-inner">
+    <a class="stik-home__logo" href="{{ section.settings.logo_link | default: routes.root_url }}">{{ section.settings.logo_text }}</a>
+
+    <nav class="stik-home__nav" aria-label="Primary">
+      <a href="{{ section.settings.posters_link | default: routes.all_products_collection_url }}">{{ section.settings.posters_label }}</a>
+      <a href="{{ section.settings.frames_link | default: routes.all_products_collection_url }}">{{ section.settings.frames_label }}</a>
+      <a href="{{ section.settings.bundles_link | default: routes.all_products_collection_url }}">{{ section.settings.bundles_label }}</a>
+      <a href="{{ section.settings.about_link | default: routes.root_url }}">{{ section.settings.about_label }}</a>
+    </nav>
+
+    <div class="stik-home__header-tools">
+      <a class="stik-home__utility-link" href="{{ routes.search_url }}" aria-label="Search">
+        {{ 'icon-search.svg' | inline_asset_content }}
+      </a>
+      <a class="stik-home__utility-link" href="{{ routes.cart_url }}" aria-label="Cart">
+        {{ 'icon-orders.svg' | inline_asset_content }}
+        <span class="stik-home__cart-count">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Stik Home Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "STIKRLY"
+    },
+    {
+      "type": "url",
+      "id": "logo_link",
+      "label": "Logo link"
+    },
+    {
+      "type": "text",
+      "id": "posters_label",
+      "label": "Posters label",
+      "default": "Posters"
+    },
+    {
+      "type": "url",
+      "id": "posters_link",
+      "label": "Posters link"
+    },
+    {
+      "type": "text",
+      "id": "frames_label",
+      "label": "Frames label",
+      "default": "Frames"
+    },
+    {
+      "type": "url",
+      "id": "frames_link",
+      "label": "Frames link"
+    },
+    {
+      "type": "text",
+      "id": "bundles_label",
+      "label": "Bundles label",
+      "default": "Bundles"
+    },
+    {
+      "type": "url",
+      "id": "bundles_link",
+      "label": "Bundles link"
+    },
+    {
+      "type": "text",
+      "id": "about_label",
+      "label": "About label",
+      "default": "About"
+    },
+    {
+      "type": "url",
+      "id": "about_link",
+      "label": "About link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Header"
+    }
+  ]
+}
+{% endschema %}

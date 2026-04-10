@@ -1,11 +1,76 @@
 {
   "sections": {
-    "stikrly_editorial_home": {
-      "type": "stikrly-editorial-home",
+    "announcement": {
+      "type": "stik-home-announcement",
+      "settings": {}
+    },
+    "header": {
+      "type": "stik-home-header",
+      "settings": {}
+    },
+    "hero": {
+      "type": "stik-home-hero",
+      "settings": {}
+    },
+    "feature_strip": {
+      "type": "stik-home-feature-strip",
+      "settings": {}
+    },
+    "categories": {
+      "type": "stik-home-category-grid",
+      "settings": {}
+    },
+    "best_sellers": {
+      "type": "stik-home-best-sellers",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "stik-home-reviews",
+      "settings": {}
+    },
+    "manifesto": {
+      "type": "stik-home-manifesto",
+      "settings": {}
+    },
+    "bundles": {
+      "type": "stik-home-bundles",
+      "settings": {}
+    },
+    "signage": {
+      "type": "stik-home-signage",
+      "settings": {}
+    },
+    "community": {
+      "type": "stik-home-community",
+      "settings": {}
+    },
+    "promise": {
+      "type": "stik-home-promise",
+      "settings": {}
+    },
+    "care": {
+      "type": "stik-home-care",
+      "settings": {}
+    },
+    "footer": {
+      "type": "stik-home-footer",
       "settings": {}
     }
   },
   "order": [
-    "stikrly_editorial_home"
+    "announcement",
+    "header",
+    "hero",
+    "feature_strip",
+    "categories",
+    "best_sellers",
+    "reviews",
+    "manifesto",
+    "bundles",
+    "signage",
+    "community",
+    "promise",
+    "care",
+    "footer"
   ]
 }

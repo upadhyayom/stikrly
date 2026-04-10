@@ -1,0 +1,256 @@
+<footer class="stik-home__footer">
+  <div class="stik-home__container stik-home__footer-shell">
+    <div class="stik-home__footer-head">
+      <h3>
+        {{ section.settings.heading_prefix }}
+        <span>{{ section.settings.heading_accent }}</span>
+      </h3>
+      <p>{{ section.settings.copy }}</p>
+
+      {% form 'customer', class: 'stik-home__newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input
+          type="email"
+          name="contact[email]"
+          value="{% if customer %}{{ customer.email }}{% endif %}"
+          placeholder="{{ section.settings.placeholder }}"
+          autocorrect="off"
+          autocapitalize="off"
+        >
+        <button type="submit">{{ section.settings.button_label }}</button>
+        {% if form.posted_successfully? %}
+          <div class="stik-home__newsletter-status">{{ section.settings.success_text }}</div>
+        {% endif %}
+        {% if form.errors %}
+          <div class="stik-home__newsletter-status">{{ form.errors | default_errors }}</div>
+        {% endif %}
+      {% endform %}
+    </div>
+
+    <div class="stik-home__footer-body">
+      <div class="stik-home__footer-brand">
+        <strong>{{ section.settings.brand_title }}</strong>
+        <p>{{ section.settings.brand_copy }}</p>
+        <div class="stik-home__social">
+          <a href="{{ section.settings.instagram_url | default: 'https://instagram.com' }}" aria-label="Instagram" target="_blank" rel="noopener noreferrer">◌</a>
+          <a href="{{ section.settings.x_url | default: 'https://twitter.com' }}" aria-label="X" target="_blank" rel="noopener noreferrer">𝕏</a>
+          <a href="{{ section.settings.facebook_url | default: 'https://facebook.com' }}" aria-label="Facebook" target="_blank" rel="noopener noreferrer">f</a>
+          <a href="{{ section.settings.email_url | default: 'mailto:hello@example.com' }}" aria-label="Email">✉</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>{{ section.settings.shop_heading }}</h4>
+        <ul class="stik-home__footer-links">
+          {% if section.settings.shop_menu != blank %}
+            {% for link in section.settings.shop_menu.links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {% else %}
+            <li><a href="{{ routes.all_products_collection_url }}">All Posters</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}">Frames</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}">Bundles</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}">New Arrivals</a></li>
+            <li><a href="{{ routes.all_products_collection_url }}">Best Sellers</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div>
+        <h4>{{ section.settings.support_heading }}</h4>
+        <ul class="stik-home__footer-links">
+          {% if section.settings.support_menu != blank %}
+            {% for link in section.settings.support_menu.links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {% else %}
+            <li><a href="/pages/contact">Contact Us</a></li>
+            <li><a href="/pages/shipping-policy">Shipping Info</a></li>
+            <li><a href="/pages/refund-policy">Returns</a></li>
+            <li><a href="/pages/faq">FAQ</a></li>
+            <li><a href="/pages/size-guide">Size Guide</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <div>
+        <h4>{{ section.settings.company_heading }}</h4>
+        <ul class="stik-home__footer-links">
+          {% if section.settings.company_menu != blank %}
+            {% for link in section.settings.company_menu.links %}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {% endfor %}
+          {% else %}
+            <li><a href="{{ routes.root_url }}">About Us</a></li>
+            <li><a href="/pages/our-story">Our Story</a></li>
+            <li><a href="/pages/sustainability">Sustainability</a></li>
+            <li><a href="/pages/press">Press</a></li>
+            <li><a href="/pages/careers">Careers</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="stik-home__footer-bottom">
+      <span>{{ section.settings.bottom_copy }}</span>
+      <div class="stik-home__footer-legal">
+        <a href="{{ section.settings.legal_1_link | default: '/policies/privacy-policy' }}">{{ section.settings.legal_1_label }}</a>
+        <a href="{{ section.settings.legal_2_link | default: '/policies/terms-of-service' }}">{{ section.settings.legal_2_label }}</a>
+        <a href="{{ section.settings.legal_3_link | default: '/policies/shipping-policy' }}">{{ section.settings.legal_3_label }}</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Stik Home Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading_prefix",
+      "label": "Heading prefix",
+      "default": "JOIN THE"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading accent",
+      "default": "MOVEMENT"
+    },
+    {
+      "type": "text",
+      "id": "copy",
+      "label": "Copy",
+      "default": "Get exclusive access to new drops, special offers, and design inspiration."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Success text",
+      "default": "Thanks for subscribing."
+    },
+    {
+      "type": "text",
+      "id": "brand_title",
+      "label": "Brand title",
+      "default": "STIKRLY"
+    },
+    {
+      "type": "textarea",
+      "id": "brand_copy",
+      "label": "Brand copy",
+      "default": "Bold designs for bold spaces. Make your walls speak."
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "x_url",
+      "label": "X URL"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "email_url",
+      "label": "Email URL"
+    },
+    {
+      "type": "text",
+      "id": "shop_heading",
+      "label": "Shop heading",
+      "default": "Shop"
+    },
+    {
+      "type": "link_list",
+      "id": "shop_menu",
+      "label": "Shop menu"
+    },
+    {
+      "type": "text",
+      "id": "support_heading",
+      "label": "Support heading",
+      "default": "Support"
+    },
+    {
+      "type": "link_list",
+      "id": "support_menu",
+      "label": "Support menu"
+    },
+    {
+      "type": "text",
+      "id": "company_heading",
+      "label": "Company heading",
+      "default": "Company"
+    },
+    {
+      "type": "link_list",
+      "id": "company_menu",
+      "label": "Company menu"
+    },
+    {
+      "type": "text",
+      "id": "bottom_copy",
+      "label": "Bottom copy",
+      "default": "© 2026 Stickrly. All rights reserved."
+    },
+    {
+      "type": "text",
+      "id": "legal_1_label",
+      "label": "Legal 1 label",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "url",
+      "id": "legal_1_link",
+      "label": "Legal 1 link"
+    },
+    {
+      "type": "text",
+      "id": "legal_2_label",
+      "label": "Legal 2 label",
+      "default": "Terms of Service"
+    },
+    {
+      "type": "url",
+      "id": "legal_2_link",
+      "label": "Legal 2 link"
+    },
+    {
+      "type": "text",
+      "id": "legal_3_label",
+      "label": "Legal 3 label",
+      "default": "Cookies"
+    },
+    {
+      "type": "url",
+      "id": "legal_3_link",
+      "label": "Legal 3 link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stik Home Footer"
+    }
+  ]
+}
+{% endschema %}
