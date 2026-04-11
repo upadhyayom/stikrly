@@ -1,60 +1,285 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "announcement": {
       "type": "stik-home-announcement",
-      "settings": {}
+      "settings": {
+        "text": "FREE SHIPPING on orders over $50 20% OFF New Arrivals Limited Time Only",
+        "show_dismiss": true
+      }
     },
     "header": {
       "type": "stik-home-header",
-      "settings": {}
+      "settings": {
+        "logo_text": "STIKRLY",
+        "logo_link": "",
+        "posters_label": "Posters",
+        "posters_link": "",
+        "frames_label": "Frames",
+        "frames_link": "",
+        "bundles_label": "Bundles",
+        "bundles_link": "",
+        "about_label": "About",
+        "about_link": ""
+      }
     },
     "hero": {
       "type": "stik-home-hero",
-      "settings": {}
+      "settings": {
+        "fallback_collection": "",
+        "rating_stars": "★★★★★",
+        "rating_text": "4.9/5 from 2,847 reviews",
+        "title_lines": "MAKE <\nYOUR\nSPACE",
+        "title_accent": "YOU",
+        "body_text": "Bold designs that speak volumes. Transform your space with our curated collection of minimalist posters and wall art.",
+        "micro_1": "Premium Quality",
+        "micro_2": "Fast Shipping",
+        "micro_3": "30-Day Returns",
+        "primary_button_label": "Shop Collection",
+        "primary_button_link": "",
+        "secondary_button_label": "View Bundles",
+        "secondary_button_link": "",
+        "stat_1_value": "500+",
+        "stat_1_label": "Designs",
+        "stat_2_value": "10K+",
+        "stat_2_label": "Happy Customers",
+        "stat_3_value": "★ 4.9",
+        "stat_3_label": "Rating",
+        "trusted_label": "Trusted by",
+        "trusted_value": "10,000+",
+        "sale_label": "New arrivals",
+        "sale_value": "20% Off"
+      }
     },
     "feature_strip": {
       "type": "stik-home-feature-strip",
-      "settings": {}
+      "settings": {
+        "item_1_icon": "ruler",
+        "item_1_title": "Premium Quality",
+        "item_1_text": "Museum-grade prints",
+        "item_2_icon": "box",
+        "item_2_title": "10,000+ Customers",
+        "item_2_text": "Trusted worldwide",
+        "item_3_icon": "truck",
+        "item_3_title": "Fast Shipping",
+        "item_3_text": "Free on orders $50+",
+        "item_4_icon": "lock",
+        "item_4_title": "100% Secure",
+        "item_4_text": "Safe checkout"
+      }
     },
     "categories": {
       "type": "stik-home-category-grid",
-      "settings": {}
+      "settings": {
+        "heading": "SHOP BY CATEGORY",
+        "copy": "Find your perfect piece",
+        "category_1_collection": "",
+        "category_1_title": "Posters",
+        "category_1_subtitle": "300+ designs",
+        "category_2_collection": "",
+        "category_2_title": "Frames",
+        "category_2_subtitle": "50+ designs",
+        "category_3_collection": "",
+        "category_3_title": "Cozy Cards",
+        "category_3_subtitle": "100+ designs",
+        "category_4_collection": "",
+        "category_4_title": "Calendars",
+        "category_4_subtitle": "20+ designs"
+      }
     },
     "best_sellers": {
       "type": "stik-home-best-sellers",
-      "settings": {}
+      "settings": {
+        "collection": "",
+        "heading": "BEST SELLERS",
+        "copy": "Our most loved designs",
+        "products_to_show": 6,
+        "view_all_label": "View all",
+        "view_all_link": ""
+      }
     },
     "reviews": {
       "type": "stik-home-reviews",
-      "settings": {}
+      "settings": {
+        "heading_prefix": "LOVED BY",
+        "heading_accent": "THOUSANDS",
+        "copy": "Don't just take our word for it - see what our customers are saying",
+        "metric_1_value": "4.9/5",
+        "metric_1_label": "Average Rating",
+        "metric_1_accent": true,
+        "metric_2_value": "2,847",
+        "metric_2_label": "Total Reviews",
+        "metric_2_accent": false,
+        "metric_3_value": "10,000+",
+        "metric_3_label": "Happy Customers",
+        "metric_3_accent": false,
+        "metric_4_value": "89%",
+        "metric_4_label": "Repeat Rate",
+        "metric_4_accent": false,
+        "review_1_text": "Absolutely love the quality! The prints are stunning and the packaging was so premium. My clients always ask where I get these posters from.",
+        "review_1_author": "Sarah Johnson",
+        "review_1_role": "Interior Designer",
+        "review_2_text": "The manifesto collection completely transformed my workspace. Bold designs that actually make a statement. Shipping was super fast too!",
+        "review_2_author": "Emma Rodriguez",
+        "review_2_role": "Homeowner",
+        "review_3_text": "Top-notch quality and design. The bundle deals are incredible value. This is now my go-to place for office decor.",
+        "review_3_author": "Michael Chen",
+        "review_3_role": "Creative Director",
+        "logo_1": "Trustpilot Excellent",
+        "logo_2": "Google Reviews 4.9",
+        "logo_3": "Featured on Behance"
+      }
     },
     "manifesto": {
       "type": "stik-home-manifesto",
-      "settings": {}
+      "settings": {
+        "collection": "",
+        "heading_prefix": "MANIFESTO",
+        "heading_accent": "COLLECTION",
+        "copy": "Bold statements for bold minds. Typography-driven designs that challenge the status quo.",
+        "kicker": "Manifesto Series",
+        "button_label": "Add to cart",
+        "card_1_title": "MAKE IT BOLD",
+        "card_1_copy": "EXPRESS YOURSELF UNAPOLOGETICALLY",
+        "card_2_title": "NO RULES",
+        "card_2_copy": "BREAK THE CONVENTIONAL",
+        "card_3_title": "STAY LOUD",
+        "card_3_copy": "YOUR VOICE MATTERS",
+        "explore_label": "Explore Full Collection",
+        "explore_link": ""
+      }
     },
     "bundles": {
       "type": "stik-home-bundles",
-      "settings": {}
+      "settings": {
+        "heading": "POSTER BUNDLES",
+        "copy": "Save more when you bundle. Curated sets for every style.",
+        "left_collection": "",
+        "left_link": "",
+        "left_save_label": "Save $10 3 Posters",
+        "left_title": "Minimalist Trio",
+        "left_price": "$79.99",
+        "left_compare_price": "$89.99",
+        "left_button_label": "Add bundle to cart",
+        "left_note": "Free shipping on all bundles",
+        "right_collection": "",
+        "right_link": "",
+        "right_save_label": "Save $20 4 Posters",
+        "right_title": "Bold Statement Set",
+        "right_price": "$99.99",
+        "right_compare_price": "$119.99",
+        "right_button_label": "Add bundle to cart",
+        "right_note": "Free shipping on all bundles",
+        "builder_heading": "Create your own bundle",
+        "builder_copy": "Mix and match any 3+ posters and get 15% off automatically at checkout",
+        "builder_button_label": "Start building",
+        "builder_link": ""
+      }
     },
     "signage": {
       "type": "stik-home-signage",
-      "settings": {}
+      "settings": {
+        "collection": "",
+        "heading": "INDUSTRIAL SAFETY SIGNAGE",
+        "products_to_show": 4,
+        "view_all_label": "View all",
+        "view_all_link": ""
+      }
     },
     "community": {
       "type": "stik-home-community",
-      "settings": {}
+      "settings": {
+        "tag": "#STIKRLY",
+        "heading_prefix": "STYLED BY",
+        "heading_accent": "OUR COMMUNITY",
+        "copy": "Real homes, real style. See how our customers are making their spaces unique.",
+        "note": "Share your Stikrly style and get featured",
+        "button_label": "Follow @Stikrly",
+        "button_link": ""
+      }
     },
     "promise": {
       "type": "stik-home-promise",
-      "settings": {}
+      "settings": {
+        "heading_prefix": "THE STIKRLY",
+        "heading_accent": "PROMISE",
+        "copy": "We're committed to delivering an exceptional experience from click to wall",
+        "card_1_icon": "ruler",
+        "card_1_title": "Premium Quality Guarantee",
+        "card_1_text": "Museum-grade paper with archival inks. If you're not satisfied, we'll make it right.",
+        "card_2_icon": "truck",
+        "card_2_title": "Fast & Free Shipping",
+        "card_2_text": "Free shipping on orders over $50. Express shipping available. Track your order every step.",
+        "card_3_icon": "return",
+        "card_3_title": "30-Day Free Returns",
+        "card_3_text": "Not in love with it? Return it within 30 days for a full refund, no questions asked.",
+        "card_4_icon": "lock",
+        "card_4_title": "Secure Checkout",
+        "card_4_text": "256-bit SSL encryption. We accept all major credit cards, PayPal, and Apple Pay.",
+        "card_5_icon": "box",
+        "card_5_title": "Premium Packaging",
+        "card_5_text": "Each print arrives in protective packaging designed to ensure perfect condition.",
+        "card_6_icon": "info",
+        "card_6_title": "Lifetime Support",
+        "card_6_text": "Our customer service team is here to help you, today and always."
+      }
     },
     "care": {
       "type": "stik-home-care",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Premium Unboxing Experience",
+        "heading": "PACKAGED WITH CARE & STYLE",
+        "copy": "Every poster arrives in our signature packaging - protective, sustainable, and designed to impress. We use rigid mailers and acid-free tissue paper to ensure your prints arrive in perfect condition.",
+        "bullet_1": "Rigid protective mailers prevent bending",
+        "bullet_2": "Acid-free tissue paper protection",
+        "bullet_3": "100% recyclable materials",
+        "bullet_4": "Branded unboxing experience",
+        "payments_heading": "Secure Payment Methods",
+        "payment_1": "Visa",
+        "payment_2": "Mastercard",
+        "payment_3": "Amex",
+        "payment_4": "PayPal",
+        "payment_5": "Apple Pay",
+        "payment_6": "Google Pay"
+      }
     },
     "footer": {
       "type": "stik-home-footer",
-      "settings": {}
+      "settings": {
+        "heading_prefix": "JOIN THE",
+        "heading_accent": "MOVEMENT",
+        "copy": "Get exclusive access to new drops, special offers, and design inspiration.",
+        "placeholder": "Enter your email",
+        "button_label": "Subscribe",
+        "success_text": "Thanks for subscribing.",
+        "brand_title": "STIKRLY",
+        "brand_copy": "Bold designs for bold spaces. Make your walls speak.",
+        "instagram_url": "",
+        "x_url": "",
+        "facebook_url": "",
+        "email_url": "",
+        "shop_heading": "Shop",
+        "shop_menu": "",
+        "support_heading": "Support",
+        "support_menu": "",
+        "company_heading": "Company",
+        "company_menu": "",
+        "bottom_copy": "© 2026 Stickrly. All rights reserved.",
+        "legal_1_label": "Privacy Policy",
+        "legal_1_link": "",
+        "legal_2_label": "Terms of Service",
+        "legal_2_link": "",
+        "legal_3_label": "Cookies",
+        "legal_3_link": ""
+      }
     }
   },
   "order": [
